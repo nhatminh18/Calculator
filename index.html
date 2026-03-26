@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng tính</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="">
+        <div class="bang-tinh">
+            <div class="">
+                <!-- <h1>CHỌN CẤU TRÚC NHÀ</h1> -->
+                <table>
+                    <h1 class="text">CHỌN CẤU TRÚC NHÀ</h1>
+                    <thead>
+                        <tr>
+                            <th>Chọn cấu trúc nhà</th>
+                            <th>Diện tích (m<span class="unit-exp">2</span>)</th>
+                            <th>Hệ số (%)</th>
+                            <th>DT quy đổi (m<span class="unit-exp">2</span>)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">
+                                <label class="" for="floor-count">Số tầng (bao gồm tầng trệt):</label>
+                                <select class="so-tang-dropdown" name="number" id="floor-count">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4" selected>4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <!-- <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option> -->
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr class="calc-row row-sum">
+                            <td class="tang-tret">Tầng trệt</td>
+                            <td class="stepper">
+                                <button type="button" class="input-dec tangtret-btn-dec">−</button>
+                                <input type="number" class="qty tangtret-input" value="70">
+                                <button type="button" class="input-inc tangtret-btn-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+
+                        <tr class="calc-row tanglung row-sum">
+                            <td>
+                                <div>
+                                    <form action="/action_page.php">
+                                        <select class="" name="number" id="tanglung-dropdown">
+                                            <option value="cotanglung">Có tầng lửng</option>
+                                            <option value="khongcotanglung">Không có tầng lửng</option>
+                                        </select>
+                                    </form>
+                                </div>
+                            </td>
+                            <td class="tanglung-dissapear">
+                                <button type="button" class="input-dec tanglung-btn-dec">−</button>
+                                <input type="number" class="qty tanglung-input" value="40">
+                                <button type="button" class="input-inc tanglung-btn-inc">+</button>
+
+                            </td>
+                            <td class="input-percent tanglung-dissapear">100%</td>
+                            <td class="result area tanglung-dissapear">14</td>
+                        </tr>
+                        <tr class="thongtang row-sum">
+                            <td>
+                                Thông tầng của lửng</td>
+                            <td>
+                                <input type="number" class="qty thongtang-input" value="30" disabled>
+                            </td>
+                            <td class="input-percent">50%</td>
+                            <td class="result area">15</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-2">
+                            <td class="">Tầng 2</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-3">
+                            <td class="">Tầng 3</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-4">
+                            <td class="">Tầng 4</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-5">
+                            <td class="">Tầng 5</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-6">
+                            <td class="">Tầng 6</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum floor-7">
+                            <td class="">Tầng 7</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">100%</td>
+                            <td class="result area">70</td>
+                        </tr>
+
+                        <!-- tang thuong -->
+                        <tr class="tang-thuong calc-row row-sum">
+                            <td class="">Tầng thượng = Tum + Sân Thượng</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty tangthuong-input" value="70" id="">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent heso-tangthuong">100%</td>
+                            <td class="result area dt-tangthuong">70</td>
+                        </tr>
+                        <tr class="calc-row row-sum tum">
+                            <td class="">Tum</td>
+                            <td class="">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty tum-input" value="30">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent heso-tum">100%</td>
+                            <td class="area result dt-tum">30</td>
+                        </tr>
+                        <tr class="co-san-thuong row-sum calc-row">
+                            <td>
+                                <input type="checkbox" id="" name="rooftop" value="rooftop" class="st-chk-box" checked>
+                                <label for="rooftop"> Có sân thượng</label>
+                            </td>
+                            <td class="st-chk-box-value">
+                                <input type="number" class="qty st-chk-box-input" value="40" id="" disabled>
+                            </td>
+                            <td class="st-chk-box-heso input-percent">50%</td>
+                            <td class="area result st-chk-box-dt">20</td>
+                        </tr>
+
+                        <!-- He mai -->
+                        <tr class="calc-row he-mai row-sum">
+                            <td>
+                                <p>HỆ MÁI</p>
+                                <form action="/action_page.php">
+                                    <select class="dropdown" name="number" id="">
+                                        <option value="mai-be-tong">Mái bê tông cốt thép đúc bằng</option>
+                                        <option value="mai-ton">Mái tôn</option>
+                                        <option value="mai-ngoi">Mái ngói xà gồ sắt</option>
+                                        <option value="mai-duc">Mái đúc bê tông xiên dán ngói</option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="35">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent">
+                                50%
+                                <div id="" class="he-so-nghieng">x1.4 hệ số nghiêng</div>
+                            </td>
+                            <td class="result area">35</td>
+                        </tr>
+                        <tr class="mong-nen row-sum">
+                            <td>
+                                <p>MÓNG VÀ NỀN</p>
+                                <form action="/action_page.php">
+                                    <select class="" name="number" id="">
+                                        <option value="mong-bang">Móng băng và móng cọc</option>
+                                        <option value="mong-don">Móng đơn</option>
+                                    </select>
+                                </form>
+                                <form action="/action_page.php" id="basementCheckbox">
+                                    <input type="checkbox" id="" name="" value="">
+                                    <label for="">Có đổ bê tông tầng trệt</label>
+                                </form>
+                            </td>
+                            <td id="">
+                                <input type="number" class="mong-nen-input" id="" value="70" disabled>
+                            </td>
+                            <td class="input-percent">50%</td>
+                            <td class="result area">35</td>
+                        </tr>
+                        <tr class="calc-row ham row-sum">
+                            <td>
+                                <select class="dropdown" name="">
+                                    <option value="co-ham">Có hầm</option>
+                                    <option value="khong-co-ham">Không có hầm</option>
+                                </select><br>
+                            </td>
+                            <td class="ham-btn">
+                                <button type="button" class="input-dec">−</button>
+                                <input type="number" class="qty" value="70">
+                                <button type="button" class="input-inc">+</button>
+                            </td>
+                            <td class="input-percent heso-ham">150%</td>
+                            <td class="result area dt-ham">105</td>
+                        </tr>
+                        <tr class="radio-chk-box">
+                            <td>
+                                <form class="">
+                                    <label>
+                                        <input type="radio" name="depth" value="lt1.2" checked>
+                                        Hầm sâu &lt; 1.2m
+                                    </label><br>
+
+                                    <label>
+                                        <input type="radio" name="depth" value="1.2-1.8">
+                                        Sâu 1.2m - 1.8m
+                                    </label><br>
+
+                                    <label>
+                                        <input type="radio" name="depth" value="gt1.8">
+                                        Sâu &gt; 1.8m
+                                    </label>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sum-title" colspan="3">Tổng diện tích quy đổi</td>
+                            <td class="sum">446 m<span class="unit-exp">2</span></td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+        </tbody>
+
+    </div>
+    <div class="don-gia">
+        <h1 class="text">ĐƠN GIÁ</h1>
+        <table>
+            <thead>
+               
+                <tr>
+                    <th>Phân loại</th>
+                    <th>Đơn giá VND/m<span class="unit-exp">2</span></th>
+                    <th>Tổng diện tích</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nhà phố liên kế</td>
+                    <td>
+                        <input type="number" class="nha-pho-input" value="0">
+                    </td>
+                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                    <td class="thanh-tien"">200 <span>VND</span></td>
+                </tr>
+
+                <tr>
+                    <td>Biệt thự, Văn phòng, Khách sạn</td>
+                    <td>
+                        <input type="number" class="mix-input" value="0">
+                    </td>
+                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                    <td class="thanh-tien">200 <span>VND</span></td>
+                </tr>
+                <tr>
+                    <td>Công trình khác</td>
+                    <td>
+                        <input type="number" class="khac-input" value="0">
+                    </td>
+                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                    <td class="thanh-tien">200 <span>VND</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
