@@ -373,22 +373,16 @@ function setupFloorCountVisibility() {
             window.__applySanThuongVisibility();
         }
 
-        // 2: show lửng block
-        if (n === 2) {
-            if (tanglungRow) tanglungRow.style.display = '';
-            if (thongtangRow) thongtangRow.style.display = '';
-            if (typeof window.__applySanThuongVisibility === 'function') {
-                window.__applySanThuongVisibility();
-            } else {
-                updateTotal();
-            }
-            return;
-        }
+        // >= 2: always show lửng block
+        if (tanglungRow) tanglungRow.style.display = '';
+        if (thongtangRow) thongtangRow.style.display = '';
 
         // 3..7: show floors 2..(n-1). (tầng trệt is floor 1; tầng thượng is the last floor block)
-        for (let i = 2; i <= n - 1; i++) {
-            const floorRow = document.querySelector(`tr.floor-${i}`);
-            if (floorRow) floorRow.style.display = '';
+        if (n >= 3) {
+            for (let i = 2; i <= n - 1; i++) {
+                const floorRow = document.querySelector(`tr.floor-${i}`);
+                if (floorRow) floorRow.style.display = '';
+            }
         }
 
         if (typeof window.__applySanThuongVisibility === 'function') {
