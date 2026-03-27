@@ -101,29 +101,34 @@ function setupRow(row) {
     updateRow(); // initial run
 }
 
-tanglungDropdown.addEventListener("change", () => {
-    let choice = tanglungDropdown.value;
+function applyTangLungVisibility() {
+    if (!tanglungDropdown) return;
+    const choice = tanglungDropdown.value;
+
     if (choice === "khongcotanglung") {
-        thongtang.forEach(function (row) {
+        thongtang.forEach(row => {
             row.style.display = "none";
-        })
+        });
 
-        tanglungDissapear.forEach(function (cell) {
+        tanglungDissapear.forEach(cell => {
             cell.style.display = "none";
-        })
-        updateTotal();
+        });
     } else {
-        thongtang.forEach(function (row) {
+        thongtang.forEach(row => {
             row.style.display = "table-row";
-        })
+        });
 
-        tanglungDissapear.forEach(function (cell) {
+        tanglungDissapear.forEach(cell => {
             cell.style.display = "table-cell";
-        })
-        updateTotal();
+        });
     }
 
-});
+    updateTotal();
+}
+
+tanglungDropdown.addEventListener("change", applyTangLungVisibility);
+// Expose for other visibility controllers (e.g. floor-count changes)
+window.__applyTangLungVisibility = applyTangLungVisibility;
 
 function updateThirdValue() {
     let first = Number(tangtretInput.value);
@@ -376,6 +381,11 @@ function setupFloorCountVisibility() {
         // >= 2: always show lửng block
         if (tanglungRow) tanglungRow.style.display = '';
         if (thongtangRow) thongtangRow.style.display = '';
+
+        // Re-apply tầng lửng dropdown rules ("không có tầng lửng" must stay hidden)
+        if (typeof window.__applyTangLungVisibility === 'function') {
+            window.__applyTangLungVisibility();
+        }
 
         // 3..7: show floors 2..(n-1). (tầng trệt is floor 1; tầng thượng is the last floor block)
         if (n >= 3) {
