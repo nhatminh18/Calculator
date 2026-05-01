@@ -130,6 +130,40 @@ tanglungDropdown.addEventListener("change", applyTangLungVisibility);
 // Expose for other visibility controllers (e.g. floor-count changes)
 window.__applyTangLungVisibility = applyTangLungVisibility;
 
+// Keep mezzanine level in the house diagram in sync with dropdowns.
+tanglungDropdown.addEventListener("change", applyHouseMezzanineVisibility);
+// Swap ground-floor slab style when no mezzanine.
+tanglungDropdown.addEventListener("change", applyHouseGroundSlabVariant);
+
+function applyHouseMezzanineVisibility() {
+    const houseMezzanineLevel = document.querySelector('.house .level.floor-mezzamine');
+    if (!houseMezzanineLevel) return;
+
+    const tangLungChoice = tanglungDropdown?.value;
+    const shouldHide = tangLungChoice === 'khongcotanglung';
+    houseMezzanineLevel.style.display = shouldHide ? 'none' : '';
+}
+
+function applyHouseGroundSlabVariant() {
+    const slabEl = document.querySelector('.house .level.floor-ground > .slab-without-balcony, .house .level.floor-ground > .slab');
+    if (!slabEl) return;
+
+    const tangLungChoice = tanglungDropdown?.value;
+    const noMezzanine = tangLungChoice === 'khongcotanglung';
+
+    slabEl.classList.toggle('slab', noMezzanine);
+    slabEl.classList.toggle('slab-without-balcony', !noMezzanine);
+}
+
+function applyHouseBasementVisibility() {
+    const houseBasementLevel = document.querySelector('.house .level.floor-basement');
+    if (!houseBasementLevel) return;
+
+    const hamChoice = document.querySelector('tr.ham select')?.value;
+    const shouldHide = hamChoice === 'khong-co-ham';
+    houseBasementLevel.style.display = shouldHide ? 'none' : '';
+}
+
 function updateThirdValue() {
     let first = Number(tangtretInput.value);
     let second = Number(tanglungInput.value);
@@ -195,12 +229,19 @@ function setupMongNenSync() {
     const mongNenCheckbox = mongNenRow.querySelector('input[type="checkbox"]');
     const mongNenPercentEl = mongNenRow.querySelector('.input-percent');
     const mongNenResultEl = mongNenRow.querySelector('.result');
+    const baseConcreteEl = document.querySelector('.house .root.level.base-concrete');
 
     if (!mongNenInput || !mongNenSelect || !mongNenCheckbox || !mongNenPercentEl || !mongNenResultEl) return;
 
     function updateMongNen() {
         const tangTretValue = Number(tangtretInput.value) || 0;
         mongNenInput.value = tangTretValue;
+        // Programmatic value updates don't fire events; we need this for house diagram sync.
+        mongNenInput.dispatchEvent(new Event('input', { bubbles: true }));
+
+        if (baseConcreteEl) {
+            baseConcreteEl.style.display = mongNenCheckbox.checked ? '' : 'none';
+        }
 
         let basePercent = mongNenSelect.value === 'mong-don' ? 30 : 50;
         if (mongNenCheckbox.checked) {
@@ -263,11 +304,15 @@ function setupHamBasementToggle() {
         hamToggleTargets.forEach(el => {
             el.style.display = isKhongCoHam ? 'none' : '';
         });
+        applyHouseBasementVisibility();
         updateHamDepthPercent();
         updateTotal();
     }
 
-    hamSelect.addEventListener('change', updateBasementVisibility);
+    hamSelect.addEventListener('change', () => {
+        updateBasementVisibility();
+        applyHouseBasementVisibility();
+    });
     depthRadios.forEach(radio => radio.addEventListener('change', updateHamDepthPercent));
     updateBasementVisibility();
 }
@@ -284,10 +329,28 @@ function setupSanThuongToggle() {
     );
     const tangThuongLabel = document.querySelector('.tang-thuong td');
     const soTangDropdown = document.getElementById('floor-count');
+    const houseStLabel = document.querySelector('.house .level.tum .label-st');
+    const houseTumLabel = document.querySelector('.house .level.tum .tum-value')?.closest('.label') || null;
+    const houseTumWallMid = document.querySelector('.house .level.tum .walls .wall.mid');
+    const originalHouseTumLabelHTML = houseTumLabel?.innerHTML ?? '';
 
     if (!checkbox || tangThuongTargets.length === 0) return;
 
     const originalLabel = 'Tầng thượng = Tum + Sân Thượng';
+
+    function updateHouseTumLabelWhenNoST() {
+        if (!houseTumLabel) return;
+        if (checkbox.checked) {
+            // Restore original Tum label content (with `.tum-value` span).
+            houseTumLabel.innerHTML = originalHouseTumLabelHTML;
+            return;
+        }
+
+        const n = soTangDropdown ? soTangDropdown.value : '';
+        const tangValue = Number(document.querySelector('.tangthuong-input')?.value) || 0;
+        const floorText = n ? `TẦNG ${n}` : 'TẦNG';
+        houseTumLabel.textContent = `${floorText} = ${tangValue}m²`;
+    }
 
     function updateLabelText() {
         if (!tangThuongLabel) return;
@@ -314,6 +377,12 @@ function setupSanThuongToggle() {
         stChungTargets.forEach(el => {
             el.style.display = isChecked ? '' : 'none';
         });
+
+        // House diagram changes when ST is unchecked
+        if (houseStLabel) houseStLabel.style.display = isChecked ? '' : 'none';
+        if (houseTumWallMid) houseTumWallMid.style.left = isChecked ? '' : '161px';
+        updateHouseTumLabelWhenNoST();
+
         updateLabelText();
         updateTotal();
     }
@@ -326,7 +395,17 @@ function setupSanThuongToggle() {
     soTangDropdown?.addEventListener('change', () => {
         if (checkbox.checked) return;
         updateLabelText();
+        updateHouseTumLabelWhenNoST();
         updateTotal();
+    });
+
+    document.querySelector('.tangthuong-input')?.addEventListener('input', () => {
+        if (checkbox.checked) return;
+        updateHouseTumLabelWhenNoST();
+    });
+    document.querySelector('.tangthuong-input')?.addEventListener('change', () => {
+        if (checkbox.checked) return;
+        updateHouseTumLabelWhenNoST();
     });
 }
 
@@ -341,6 +420,60 @@ function setupFloorCountVisibility() {
     const allExtraRows = document.querySelectorAll(
         'tr.tanglung, tr.thongtang, tr.floor-2, tr.floor-3, tr.floor-4, tr.floor-5, tr.floor-6, tr.floor-7, tr.tang-thuong, tr.tum, tr.co-san-thuong'
     );
+
+    function applyHouseTopLevelsVisibility(n) {
+        const houseTumLevel = document.querySelector('.house .level.tum');
+        const houseMezzanineLevel = document.querySelector('.house .level.floor-mezzamine');
+        const groundSlabEl = document.querySelector('.house .level.floor-ground > .slab-without-balcony, .house .level.floor-ground > .slab');
+
+        if (houseTumLevel) houseTumLevel.style.display = n === 1 ? 'none' : '';
+        // If n===1 always hide mezzanine; otherwise it is controlled by tầng lửng dropdown.
+        if (houseMezzanineLevel && n === 1) houseMezzanineLevel.style.display = 'none';
+        if (n !== 1 && typeof applyHouseMezzanineVisibility === 'function') {
+            applyHouseMezzanineVisibility();
+        }
+
+        // If only 1 floor: force ground slab to "without balcony" and width 70%.
+        if (groundSlabEl) {
+            if (n === 1) {
+                groundSlabEl.classList.add('slab-without-balcony');
+                groundSlabEl.classList.remove('slab');
+                groundSlabEl.style.width = '70%';
+            } else {
+                groundSlabEl.style.width = '';
+                // Restore variant based on tầng lửng dropdown selection.
+                if (typeof applyHouseGroundSlabVariant === 'function') {
+                    applyHouseGroundSlabVariant();
+                }
+            }
+        }
+    }
+
+    function applyHouseFloorVisibility(n) {
+        // House floors use word-based classnames: floor-two..floor-seven
+        const map = {
+            2: 'two',
+            3: 'three',
+            4: 'four',
+            5: 'five',
+            6: 'six',
+            7: 'seven',
+        };
+
+        // Default hide all 2..7 in the house
+        Object.values(map).forEach(word => {
+            const level = document.querySelector(`.house .level.floor-${word}`);
+            if (level) level.style.display = 'none';
+        });
+
+        // Mirror table logic: if total floors is n, show floors 2..(n-1)
+        if (n < 3) return;
+        for (let i = 2; i <= Math.min(7, n - 1); i++) {
+            const word = map[i];
+            const level = word ? document.querySelector(`.house .level.floor-${word}`) : null;
+            if (level) level.style.display = '';
+        }
+    }
 
     function setRowsVisible(rows, visible) {
         rows.forEach(row => {
@@ -363,6 +496,8 @@ function setupFloorCountVisibility() {
         // Apply rules:
         // 1: show only ground floor
         if (n === 1) {
+            applyHouseFloorVisibility(n);
+            applyHouseTopLevelsVisibility(n);
             updateTotal();
             return;
         }
@@ -394,6 +529,10 @@ function setupFloorCountVisibility() {
                 if (floorRow) floorRow.style.display = '';
             }
         }
+
+        // Keep house floors in sync with table floors
+        applyHouseFloorVisibility(n);
+        applyHouseTopLevelsVisibility(n);
 
         if (typeof window.__applySanThuongVisibility === 'function') {
             window.__applySanThuongVisibility();
@@ -463,6 +602,46 @@ function setupDonGiaThanhTien() {
     updateDonGiaThanhTien();
 }
 
+function setupHouseDiagramValueSync() {
+    const setText = (valueSelector, value) => {
+        const el = document.querySelector(valueSelector);
+        if (!el) return;
+        el.textContent = String(Number(value) || 0);
+    };
+
+    const bindValue = (inputSelector, valueSelector) => {
+        const input = document.querySelector(inputSelector);
+        if (!input) return;
+
+        const update = () => setText(valueSelector, input.value);
+        ['input', 'change'].forEach(evt => input.addEventListener(evt, update));
+        update();
+    };
+
+    // 1) Tum & Sân thượng
+    bindValue('.tum-input', '.tum-value');
+    bindValue('.st-chk-box-input', '.st-value');
+
+    // 2) Floors 2..7 (table rows) -> house diagram labels
+    bindValue('tr.floor-7 input.qty', '.floor-seven-value');
+    bindValue('tr.floor-6 input.qty', '.floor-six-value');
+    bindValue('tr.floor-5 input.qty', '.floor-five-value');
+    bindValue('tr.floor-4 input.qty', '.floor-four-value');
+    bindValue('tr.floor-3 input.qty', '.floor-three-value');
+    bindValue('tr.floor-2 input.qty', '.floor-two-value');
+
+    // 3) Mezzanine + Ground
+    bindValue('.tanglung-input', '.floor-mezzamine-value');
+    bindValue('.tangtret-input', '.floor-ground-value');
+
+    // 4) Basement + Foundation
+    bindValue('.ham-btn input.qty', '.floor-basement-value');
+    bindValue('.mong-nen-input', '.foundation-value');
+
+    // 5) Hệ mái
+    bindValue('tr.he-mai input.qty', '.he-mai-value');
+}
+
 
 function updateTotal() {
     const rows = document.querySelectorAll(".row-sum"); // ✅ only valid rows
@@ -506,5 +685,9 @@ setupHamBasementToggle();
 setupSanThuongToggle();
 setupFloorCountVisibility();
 setupDonGiaThanhTien();
+setupHouseDiagramValueSync();
 updateTangThuongValue();
 updateTotal();
+applyHouseMezzanineVisibility();
+applyHouseBasementVisibility();
+applyHouseGroundSlabVariant();
