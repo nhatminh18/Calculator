@@ -217,6 +217,10 @@ input {
     td {
       color: black !important;
     }
+  
+    house {
+      margin-left: 30px; 
+    }
 }
 
 @media print {
