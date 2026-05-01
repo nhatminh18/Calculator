@@ -147,7 +147,7 @@
 
                         <!-- tang thuong -->
                         <tr class="tang-thuong calc-row row-sum">
-                            <td class="">Tầng thượng = Tum + Sân Thượng</td>
+                            <td class="tang-thuong-label">Tầng thượng = Tum + Sân Thượng</td>
                             <td class="">
                                 <button type="button" class="input-dec">−</button>
                                 <input type="number" class="qty tangthuong-input" value="70" id="">
@@ -266,48 +266,170 @@
         </div>
         </tbody>
 
-    </div>
-    <div class="don-gia">
-        <h1 class="text">ĐƠN GIÁ</h1>
-        <table>
-            <thead>
-               
-                <tr>
-                    <th>Phân loại</th>
-                    <th>Đơn giá VND/m<span class="unit-exp">2</span></th>
-                    <th>Tổng diện tích</th>
-                    <th>Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Nhà phố liên kế</td>
-                    <td>
-                        <input type="number" class="nha-pho-input" value="0">
-                    </td>
-                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
-                    <td class="thanh-tien"">200 <span>VND</span></td>
+        <div class="don-gia">
+            <h1 class="text">ĐƠN GIÁ</h1>
+            <table>
+                <thead>
+
+                    <tr>
+                        <th>Phân loại</th>
+                        <th>Đơn giá VND/m<span class="unit-exp">2</span></th>
+                        <th>Tổng diện tích</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nhà phố liên kế</td>
+                        <td>
+                            <input type="number" class="nha-pho-input" value="0">
+                        </td>
+                        <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                        <td class="thanh-tien"">200 <span>VND</span></td>
                 </tr>
 
                 <tr>
                     <td>Biệt thự, Văn phòng, Khách sạn</td>
                     <td>
-                        <input type="number" class="mix-input" value="0">
-                    </td>
-                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
-                    <td class="thanh-tien">200 <span>VND</span></td>
-                </tr>
-                <tr>
-                    <td>Công trình khác</td>
-                    <td>
-                        <input type="number" class="khac-input" value="0">
-                    </td>
-                    <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
-                    <td class="thanh-tien">200 <span>VND</span></td>
-                </tr>
-            </tbody>
-        </table>
+                        <input type=" number" class="mix-input" value="0">
+                        </td>
+                        <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                        <td class="thanh-tien">200 <span>VND</span></td>
+                    </tr>
+                    <tr>
+                        <td>Công trình khác</td>
+                        <td>
+                            <input type="number" class="khac-input" value="0">
+                        </td>
+                        <td class="don-gia-sum">200 m<span class="unit-exp">2</span></td>
+                        <td class="thanh-tien">200 <span>VND</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
+    <div class="house">
+        <span class="label-hemai label">Mái = <span class="he-mai-value">30</span>m²</span>
+        <!-- TUM -->
+        <div class="level tum">
+            <div class="slab-without-balcony"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall mid"></div>
+            </div>
+            <!-- <div class="beams">
+                <div class="beam left"></div>
+                <div class="beam right"></div>
+            </div> -->
+
+            <span class="label">TUM = <span class="tum-value">30</span>m²</span>
+            <span class="label-st">ST = <span class="st-value">40</span>m²</span>
+        </div>
+
+        <!-- TERRACE -->
+
+
+        <!-- FLOOR 2 to 7-->
+        <div class="level floor-seven">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+
+            <span class="label">TẦNG 7 = <span class="floor-seven-value">70</span>m²</span>
+        </div>
+
+        <div class="level floor-six">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG 6 = <span class="floor-six-value">70</span>m²</span>
+        </div>
+
+        <div class="level floor-five">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG 5 = <span class="floor-five-value">70</span>m²</span>
+        </div>
+
+        <div class="level floor-four">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG 4 = <span class="floor-four-value">70</span>m²</span>
+        </div>
+
+        <div class="level floor-three">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG 3 = <span class="floor-three-value">75</span>m²</span>
+        </div>
+
+        <div class="level floor-two">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG 2 = <span class="floor-two-value">75</span>m²</span>
+        </div>
+
+        <!-- MEZZAMINE FLOOR  -->
+        <div class="level floor-mezzamine">
+            <div class="slab"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG LỬNG = <span class="floor-mezzamine-value">75</span>m²</span>
+        </div>
+
+        <!-- GROUND FLOOR  -->
+        <div class="level floor-ground">
+            <div class="slab-without-balcony"></div>
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">TẦNG Trệt = <span class="floor-ground-value">75</span>m²</span>
+            <div class="ground-floor-slab"></div>
+        </div>
+
+        <!-- BASE CONCRETE -->
+        <div class="root level base-concrete" style="display: none;">
+            <div class="slab-without-balcony"></div>
+        </div>
+
+        <!-- BASEMENT -->
+        <div class="level floor-basement">
+            <div class="walls">
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+            </div>
+            <span class="label">Hầm = <span class="floor-basement-value">75</span>m²</span>
+            <div class="ground-floor-slab"></div>
+        </div>
+
+        <!-- FOUNDATION -->
+        <div class="foundation">
+            <div class="foot left"></div>
+            <div class="foot right"></div>
+            <span class="label">Móng = <span class="foundation-value">70</span>m²</span>
+        </div>
+
     </div>
     <script src="script.js"></script>
 </body>
