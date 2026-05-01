@@ -1,5 +1,19 @@
+html, body {
+  overflow-x: auto;
+}
+
 body {
     font-family: Verdana;
+    background: #ddd;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 40px;
+  /* Let the document become wider than the viewport when needed,
+     so the browser shows a horizontal scrollbar instead of breaking layout. */
+  width: max-content;
+  min-width: 100%;
 }
 
 h1 {
@@ -152,6 +166,10 @@ input {
     display: inline-block;
 }
 
+.don-gia {
+  width: 91%;
+}
+
 .don-gia th {
     width: 145px;
 }
@@ -199,9 +217,9 @@ input {
     td {
       color: black !important;
     }
-  }
+}
 
-  @media print {
+@media print {
     h1 {
       text-align: center !important;
       width: 40%;
@@ -211,4 +229,229 @@ input {
         margin-left: 210px;
     }
 
-  }
+}
+
+/* Building */
+
+.house {
+  width: 290px;
+  margin-top: 50px;
+  position: relative;
+}
+
+/* ===== LEVEL ===== */
+.level {
+  position: relative;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+/* ===== SLAB (PURPLE) ===== */
+.slab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 3px;
+  background: #3b3bbf;
+  border: 4px solid black;
+  z-index: 1;
+}
+
+.slab-without-balcony {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 70%;
+  height: 3px;
+  background: #3b3bbf;
+  border: 4px solid black;
+}
+
+.ground-floor-slab {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 90%;
+  height: 5px;
+  background: #3b3bbf;
+  border: 4px solid black;
+}
+
+.floor-ground .slab-without-balcony {
+    width: 40%;
+}
+
+/* cantilever */
+.slab::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: -28px;
+  width: 5px;
+  height: 20px;
+  background: #3b3bbf;
+  border: 4px solid black;
+}
+
+/* ===== WALLS (RED) ===== */
+.wall {
+  position: absolute;
+  width: 10px;
+  height: 40px;
+  background: red;
+  border: 4px solid black;
+  top: 7px;
+}
+
+/* .beam {
+  position: absolute;
+  width: 10px;
+  height: 12px;
+  background: black;
+  border: 4px solid black;
+  top: 0px;
+  z-index: 2;
+}
+
+.beam.right {
+  right: 162px;
+}
+
+.beam.left {
+  left: 0px;
+} */
+
+/* .beams.left {
+  left: 20px;
+} */
+
+
+/* .wall.left {
+  left: 20px;
+} */
+
+.wall.mid {
+  left: 110px;
+}
+
+.wall.right {
+  right: 111px;
+}
+
+.floor-mezzamine .wall.right {
+    border-bottom: none;
+    height: 50px;
+}
+
+.floor-ground .wall.right {
+    border-top: none;
+}
+
+/* ===== SPECIAL LEVELS ===== */
+
+/* .terrace .slab {
+  width: 85%;
+  margin-left: 120px;
+} */
+
+/* ===== FOUNDATION (GRAY) ===== */
+.foundation {
+  position: relative;
+  height: 115px;
+  margin-top: 10px;
+}
+
+.foot {
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  background: gray;
+  border: 4px solid black;
+  bottom: 35px;
+}
+
+.foot.left {
+  left: 5px;
+}
+
+.foot.right {
+  right: 105px;
+}
+
+/* columns down */
+.foundation::before,
+.foundation::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 30px;
+  background: #999;
+  border: 4px solid black;
+  bottom: 70px;
+}
+
+.foundation::before {
+  left: 30px;
+}
+
+.foundation::after {
+  right: 130px;
+}
+
+.root .slab-without-balcony{
+  background: red;
+  width: 68%;
+  top: 7px;
+  z-index: 1;
+}
+
+.root.level {
+  margin-bottom: 0;
+  height: auto;
+}
+
+/* ===== TEXT ===== */
+
+
+
+.label {
+  position: absolute;
+  top: 23px;
+  left: 22px;
+  color: #000;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.label-st {
+  position: absolute;
+  top: 22px;
+  left: 145px;
+  color: #000;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.label-hemai.label {
+  left: 60px;
+  top: -20px;
+}
+
+.level.floor-basement .ground-floor-slab {
+  width: 59%;
+}
+
+.foundation .label {
+    top: 18px;
+    left: 50px;
+}
+
+/* Prevent flex children from shrinking and breaking the layout */
+body > div {
+  flex: 0 0 auto;
+}
+
+table {
+  white-space: nowrap;
+}
