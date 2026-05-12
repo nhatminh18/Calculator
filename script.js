@@ -577,7 +577,7 @@ function formatNumberWithCommas(value, fractionDigits = 1) {
 function updateDonGiaThanhTien() {
     const donGiaRows = document.querySelectorAll(".don-gia tbody tr");
     donGiaRows.forEach(row => {
-        const unitPriceInput = row.querySelector('input[type="number"]');
+        const unitPriceInput = row.querySelector('input');
         const areaEl = row.querySelector(".don-gia-sum");
         const thanhTienEl = row.querySelector(".thanh-tien");
         if (!unitPriceInput || !areaEl || !thanhTienEl) return;
@@ -587,14 +587,14 @@ function updateDonGiaThanhTien() {
         const area = parseFloat(areaText) || 0;
         const thanhTien = unitPrice * area;
 
-        thanhTienEl.textContent = `${formatNumberWithCommas(thanhTien)} VND`;
+        thanhTienEl.textContent = `${formatNumberWithCommas(thanhTien, 0)} VND`;
     });
 }
 
 function setupDonGiaThanhTien() {
     const donGiaRows = document.querySelectorAll(".don-gia tbody tr");
     donGiaRows.forEach(row => {
-        const unitPriceInput = row.querySelector('input[type="number"]');
+        const unitPriceInput = row.querySelector('input');
         if (!unitPriceInput) return;
         unitPriceInput.addEventListener("input", updateDonGiaThanhTien);
         unitPriceInput.addEventListener("change", updateDonGiaThanhTien);
